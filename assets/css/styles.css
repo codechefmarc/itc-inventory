@@ -241,3 +241,12 @@ tr:hover {
     opacity: 0.6;
     pointer-events: none;
 }
+
+.status-option {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.status-option input {
+    margin-bottom: 5px;
+}

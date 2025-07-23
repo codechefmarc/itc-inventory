@@ -26,36 +26,33 @@
 
         <form method="POST" action="">
             <div class="form-row">
-                <div class="form-group">
-                    <label for="serial_number">Serial Number:</label>
-                    <input type="text" id="serial_number" name="serial_number" required>
-                </div>
+              <div class="form-group">
+                  <label for="tracking_number">SRJC Tag:</label>
+                  <input type="text" id="tracking_number" name="tracking_number">
+              </div>
 
-                <div class="form-group">
-                    <label for="tracking_number">Tracking Number (Unique ID):</label>
-                    <input type="text" id="tracking_number" name="tracking_number" required>
-                </div>
+              <div class="form-group">
+                  <label for="serial_number">Serial Number:</label>
+                  <input type="text" id="serial_number" name="serial_number">
+              </div>
+
             </div>
 
             <div class="form-row">
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <label for="model_number">Model Number:</label>
-                    <input type="text" id="model_number" name="model_number" required>
-                </div>
+                    <input type="text" id="model_number" name="model_number">
+                </div> -->
 
-                <div class="form-group">
-                    <label for="status_id">Status:</label>
-                    <select id="status_id" name="status_id" required>
-                        <option value="">Select Status</option>
-                        <?php foreach ($statuses as $status_option) : ?>
-                            <option value="<?php echo $status_option['id']; ?>">
-                                <?php echo htmlspecialchars($status_option['status_name']); ?>
-                                <?php if ($status_option['description']) : ?>
-                                    - <?php echo htmlspecialchars($status_option['description']); ?>
-                                <?php endif; ?>
-                            </option>
-                        <?php endforeach; ?>
-                    </select>
+                <div class="form-group status-group">
+                    <label>Status:</label>
+Saved: <?php echo $status->saved_status_id; ?>
+                    <?php foreach ($statuses as $status_option) : ?>
+                      <div class="status-option">
+                        <input type="radio" id="status_id_<?php echo $status_option['id']?>" name="status_id" value="<?php echo $status_option['id']; ?>" required>
+                        <label for="status_id_<?php echo $status_option['id']?>"><?php echo htmlspecialchars($status_option['status_name']); ?></label>
+                      </div>
+                    <?php endforeach; ?>
                 </div>
             </div>
 

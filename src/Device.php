@@ -29,7 +29,7 @@ class Device {
     // Sanitize inputs.
     $this->serial_number = htmlspecialchars(strip_tags($this->serial_number));
     $this->tracking_number = htmlspecialchars(strip_tags($this->tracking_number));
-    $this->model_number = htmlspecialchars(strip_tags($this->model_number));
+    //$this->model_number = htmlspecialchars(strip_tags($this->model_number));
 
     // Bind parameters.
     $stmt->bindParam(':serial_number', $this->serial_number);
@@ -50,6 +50,17 @@ class Device {
     $query = "SELECT * FROM " . $this->table_name . " WHERE id = :id LIMIT 1";
     $stmt = $this->conn->prepare($query);
     $stmt->bindParam(':id', $id);
+    $stmt->execute();
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+  }
+
+  /**
+   * Get a device by its tracking number.
+   */
+  public function getByTrackingNumber($tracking_number) {
+    $query = "SELECT * FROM " . $this->table_name . " WHERE tracking_number = :tracking_number LIMIT 1";
+    $stmt = $this->conn->prepare($query);
+    $stmt->bindParam(':tracking_number', $tracking_number);
     $stmt->execute();
     return $stmt->fetch(PDO::FETCH_ASSOC);
   }

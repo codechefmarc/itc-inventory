@@ -11,6 +11,8 @@ class Status {
   public $status_name;
   public $description;
 
+  public $saved_status_id;
+
   public function __construct($db) {
     $this->conn = $db;
   }
@@ -19,7 +21,7 @@ class Status {
    * Get all statuses from the database.
    */
   public function getAll() {
-    $query = "SELECT * FROM " . $this->table_name . " ORDER BY status_name ASC";
+    $query = "SELECT * FROM " . $this->table_name . " ORDER BY id ASC";
     $stmt = $this->conn->prepare($query);
     $stmt->execute();
     return $stmt;
