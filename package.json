@@ -1,0 +1,16 @@
+{
+  "name": "itc-inventory",
+  "version": "1.0.0",
+  "description": "A project for managing inventory with SASS styles.",
+  "main": "index.js",
+  "scripts": {
+    "sass": "sass assets/css/styles.scss assets/css/styles.css",
+    "sass:watch": "sass --watch assets/css/styles.scss:assets/css/styles.css"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "sass": "^1.32.0"
+  }
+}
