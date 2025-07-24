@@ -151,24 +151,19 @@ tr:hover {
     letter-spacing: 0.5px;
 }
 
-.status-available {
+.status-techdesk {
     background-color: #28a745;
 }
 
-.status-assigned {
+.status-imaging {
     background-color: #007bff;
 }
 
-.status-maintenance {
-    background-color: #ffc107;
-    color: #000;
-}
-
-.status-retired {
+.status-surplus {
     background-color: #6c757d;
 }
 
-.status-damaged {
+.status-repair {
     background-color: #dc3545;
 }
 

@@ -66,6 +66,17 @@ class Device {
   }
 
   /**
+   * Get a device by its tracking number.
+   */
+  public function getBySerialNumber($serial_number) {
+    $query = "SELECT * FROM " . $this->table_name . " WHERE serial_number = :serial_number LIMIT 1";
+    $stmt = $this->conn->prepare($query);
+    $stmt->bindParam(':serial_number', $serial_number);
+    $stmt->execute();
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+  }
+
+  /**
    * Get all devices from the database.
    */
   public function getAll() {

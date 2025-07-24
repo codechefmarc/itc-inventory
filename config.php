@@ -14,6 +14,7 @@ require_once 'src/Database.php';
 require_once 'src/Status.php';
 require_once 'src/Device.php';
 require_once 'src/DeviceActivity.php';
+require_once 'src/MessageManager.php';
 
 // Initialize database connection.
 $database = new Database();
@@ -22,10 +23,11 @@ $db = $database->connect();
 // Initialize class instances.
 $status = new Status($db);
 $device = new Device($db);
-$deviceEntry = new DeviceActivity($db);
+$deviceActivity = new DeviceActivity($db);
+$messages = MessageManager::getInstance();
 
 // Application configuration.
-define('APP_NAME', 'Laptop Inventory Tracking System');
+define('APP_NAME', 'ITC Checkout Laptop Inventory');
 define('APP_VERSION', '1.0');
 
 /**
