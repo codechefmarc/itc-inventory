@@ -13,7 +13,7 @@ include_once 'views/header.php';
   <div class="form-data-entry">
     <div class="form-row">
       <div class="form-group status-group">
-        <label>Status:</label>
+        <p class="status-label">Status:</p>
         <?php foreach ($statuses as $status_option) : ?>
           <?php
           $checked = NULL;

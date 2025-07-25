@@ -54,7 +54,7 @@ h2 {
   margin-bottom: 20px;
 }
 
-label {
+label, .status-label {
   display: block;
   margin-bottom: 5px;
   font-weight: bold;
@@ -186,13 +186,23 @@ table tr:hover {
 .status-option {
   display: flex;
   gap: 0.5rem;
+  align-items: center;
 }
 .status-option input {
   margin-bottom: 5px;
 }
 
+.status-option label {
+  margin-bottom: 0;
+}
+
 .form-data-entry, .activity-log-form {
   display: block;
+}
+
+.form-data-entry input[type=radio] {
+  width: 20px;
+  height: 20px;
 }
 
 .device-edit-form input {
@@ -220,6 +230,7 @@ table tr:hover {
   .form-data-entry {
     display: flex;
     gap: 5rem;
+    align-items: baseline;
   }
   .activity-log-form {
     display: flex;

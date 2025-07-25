@@ -65,7 +65,7 @@ h2 { margin-bottom: 20px; }
 // Form Styles
 .form-group { margin-bottom: 20px; }
 
-label {
+label, .status-label {
   display: block;
   margin-bottom: 5px;
   font-weight: bold;
@@ -177,13 +177,23 @@ table {
 .status-option {
   display: flex;
   gap: 0.5rem;
+  align-items: center;
 
   input { margin-bottom: 5px; }
+}
+
+.status-option label {
+  margin-bottom: 0;
 }
 
 // Layout
 .form-data-entry, .activity-log-form {
   display: block;
+}
+
+.form-data-entry input[type="radio"] {
+  width: 20px;
+  height: 20px;
 }
 
 // Edit Forms
@@ -199,7 +209,7 @@ table {
   table { font-size: 14px; }
   th, td { padding: 8px 5px; }
   .status-badge { font-size: 12px; padding: 4px 8px; }
-  .form-data-entry { display: flex; gap: 5rem; }
+  .form-data-entry { display: flex; gap: 5rem; align-items: baseline;}
   .activity-log-form {
     display: flex;
     flex-direction: column;
