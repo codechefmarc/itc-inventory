@@ -67,4 +67,4 @@ while ($row = $statuses_result->fetch(PDO::FETCH_ASSOC)) {
 $device_activity = $deviceActivity->getAllWithDevicesAndStatus();
 
 // Include the view.
-include 'views/activity-log-form.php';
+include 'views/activity_log_form.php';

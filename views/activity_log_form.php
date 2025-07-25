@@ -50,7 +50,7 @@ include_once 'views/header.php';
 
     </div>
   </div>
-  <button type="submit">Log Device Activity</button>
+  <button type="submit" class="button">Log Device Activity</button>
 </form>
 
 <?php

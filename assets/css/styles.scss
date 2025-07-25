@@ -83,7 +83,7 @@ input[type="text"], select {
 
 select { background-color: white; }
 
-button {
+.button {
   background-color: $primary;
   color: white;
   padding: 12px 30px;
@@ -92,9 +92,19 @@ button {
   cursor: pointer;
   font-size: 16px;
   transition: background-color 0.3s;
+  text-decoration: none;
 
   &:hover {
     background-color: color.scale($primary, $lightness: -20%);
+  }
+}
+
+.severe-action {
+  background-color: $danger;
+  color: white;
+
+  &:hover {
+    background-color: color.scale($danger, $lightness: -20%);
   }
 }
 
@@ -144,6 +154,14 @@ table {
   &.status-imaging { background-color: $primary; }
   &.status-surplus { background-color: $gray; }
   &.status-repair { background-color: $danger; }
+}
+
+// Action icons
+.action-icon {
+  color: $primary;
+  &:hover {
+    color: color.scale($primary, $lightness: -30%);
+  }
 }
 
 // Utility Classes

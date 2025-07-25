@@ -74,7 +74,7 @@ select {
   background-color: white;
 }
 
-button {
+.button {
   background-color: #007bff;
   color: white;
   padding: 12px 30px;
@@ -83,9 +83,18 @@ button {
   cursor: pointer;
   font-size: 16px;
   transition: background-color 0.3s;
+  text-decoration: none;
 }
-button:hover {
+.button:hover {
   background-color: rgb(0, 98.4, 204);
+}
+
+.severe-action {
+  background-color: #dc3545;
+  color: white;
+}
+.severe-action:hover {
+  background-color: rgb(186.146835443, 32.253164557, 46.9974683544);
 }
 
 .inventory-list {
@@ -140,6 +149,13 @@ table tr:hover {
 }
 .status-badge.status-repair {
   background-color: #dc3545;
+}
+
+.action-icon {
+  color: #007bff;
+}
+.action-icon:hover {
+  color: rgb(0, 86.1, 178.5);
 }
 
 .text-center {

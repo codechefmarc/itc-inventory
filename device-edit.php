@@ -14,6 +14,12 @@ include_once 'views/header.php';
 
 $device_info = $device->getById($_GET['id'] ?? 0);
 
+if (!$device_info) {
+  $messages->addError("Device not found.");
+  header('Location: /');
+  exit;
+}
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   if (empty($_GET['id'])) {
     $messages->addError("Device not found.");
@@ -50,5 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <input type="text" id="model_number" name="model_number" value="<?php echo htmlspecialchars($device_info['model_number'] ?? ''); ?>">
       </div>
       <input type="hidden" name="id" value="<?php echo htmlspecialchars($_GET['id'] ?? ''); ?>">
-    <button type="submit">Update Device</button>
+    <button type="submit" class="button">Update Device</button>
 </form>
+
+<?php include_once 'views/footer.php';

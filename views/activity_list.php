@@ -39,11 +39,11 @@
                         </td>
                         <td><?php echo format_date($row['date_added']); ?></td>
                         <td>
-                          <a href="/device-edit.php?id=<?php echo htmlspecialchars($row['device_id']); ?>" title="Edit"><i class="fa-solid fa-pen-to-square"></i></a>
-                          <a href="/device-delete.php?id=<?php echo htmlspecialchars($row['device_id']); ?>" title="Delete"><i class="fa-solid fa-trash"></i></a>
+                          <a class="action-icon" href="/device-edit.php?id=<?php echo htmlspecialchars($row['device_id']); ?>" title="Edit device"><i class="fa-solid fa-pen-to-square"></i></a>
+                          <a class="action-icon" href="/device-delete.php?id=<?php echo htmlspecialchars($row['device_id']); ?>" title="Delete device"><i class="fa-solid fa-trash"></i></a>
                         </td>
                         <td>
-                          <a href="/activity-delete.php?id=<?php echo htmlspecialchars($row['entry_id']); ?>" title="Delete"><i class="fa-solid fa-trash"></i></a>
+                          <a class="action-icon" href="/activity-delete.php?id=<?php echo htmlspecialchars($row['entry_id']); ?>" title="Delete activity"><i class="fa-solid fa-trash"></i></a>
                         </td>
                     </tr>
                 <?php endwhile; ?>
