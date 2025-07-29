@@ -7,13 +7,14 @@
 ?>
 
 <div class="inventory-list">
-  <h2>Device Activity</h2>
+  <h2>Today's Device Activity</h2>
     <table>
         <thead>
             <tr>
                 <th>SRJC Tag</th>
                 <th>Serial Number</th>
                 <th>Model Number</th>
+                <th>Notes</th>
                 <th>Status</th>
                 <th>Date Added</th>
                 <th>Device</th>
@@ -21,16 +22,31 @@
             </tr>
         </thead>
         <tbody>
-            <?php if ($device_activity->rowCount() > 0) : ?>
-                <?php while ($row = $device_activity->fetch(PDO::FETCH_ASSOC)) : ?>
+            <?php if ($today_device_activity->rowCount() > 0) : ?>
+                <?php while ($row = $today_device_activity->fetch(PDO::FETCH_ASSOC)) : ?>
                   <?php
                   $model_number = !empty($row['model_number']) ? htmlspecialchars($row['model_number']) : '';
+                  $notes = !empty($row['notes']) ? htmlspecialchars($row['notes']) : '';
+                  $device_number = $row['tracking_number'] ? 'SRJC: ' . $row['tracking_number'] : 'serial: ' . $row['serial_number'];
                   ?>
                   <tr>
 
                         <td><?php echo htmlspecialchars($row['tracking_number']); ?></td>
                         <td><?php echo htmlspecialchars($row['serial_number']); ?></td>
                         <td><?php echo $model_number; ?></td>
+                        <td class="notes">
+                          <?php
+                          if ($notes) : ?>
+                            <dialog class="dialog-note" id="note-<?php echo htmlspecialchars($row['entry_id']); ?>" class="note-dialog">
+                              <h2>Notes for <?php echo $device_number; ?></h2>
+                              <p><?php echo $notes; ?></p>
+                              <a href="#!">Close</a>
+                            </dialog>
+                            <a class="action-icon" href="#note-<?php echo htmlspecialchars($row['entry_id']); ?>" title="View note"><i class="fa-solid fa-file-lines"></i></a>
+                            <div class="note-preview"><?php echo $notes; ?></div>
+
+                          <?php endif; ?>
+                        </td>
                         <td>
                             <span class="status-badge <?php echo get_status_badge_class($row['status_name']); ?>"
                                   title="<?php echo htmlspecialchars($row['status_description']); ?>">
@@ -43,6 +59,7 @@
                           <a class="action-icon" href="/device-delete.php?id=<?php echo htmlspecialchars($row['device_id']); ?>" title="Delete device"><i class="fa-solid fa-trash"></i></a>
                         </td>
                         <td>
+                          <a class="action-icon" href="/activity-edit.php?id=<?php echo htmlspecialchars($row['entry_id']); ?>" title="Edit activity"><i class="fa-solid fa-pen-to-square"></i></a>
                           <a class="action-icon" href="/activity-delete.php?id=<?php echo htmlspecialchars($row['entry_id']); ?>" title="Delete activity"><i class="fa-solid fa-trash"></i></a>
                         </td>
                     </tr>

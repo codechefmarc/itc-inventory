@@ -45,6 +45,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <label for="tracking_number">SRJC Tag:</label>
         <input type="text" id="tracking_number" name="tracking_number" value="<?php echo htmlspecialchars($device_info['tracking_number'] ?? ''); ?>" autofocus="autofocus">
       </div>
+    </div>
+    <div class="form-row">
       <div class="form-group">
         <label for="serial_number">Serial Number:</label>
         <input type="text" id="serial_number" name="serial_number" value="<?php echo htmlspecialchars($device_info['serial_number'] ?? ''); ?>">
@@ -56,7 +58,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <input type="text" id="model_number" name="model_number" value="<?php echo htmlspecialchars($device_info['model_number'] ?? ''); ?>">
       </div>
       <input type="hidden" name="id" value="<?php echo htmlspecialchars($_GET['id'] ?? ''); ?>">
+    </div>
     <button type="submit" class="button">Update Device</button>
+    <a href="/" class="button">Cancel</a>
 </form>
 
 <?php include_once 'views/footer.php';

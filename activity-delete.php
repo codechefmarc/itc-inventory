@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Edit device form.
+ * Delete activity form.
  */
 
 session_start();
@@ -45,6 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   <li>Model Number: <?php echo htmlspecialchars($device_info['model_number'] ?? ''); ?></li>
   <li>Status: <?php echo htmlspecialchars($activity_info['status_name'] ?? ''); ?></li>
   <li>Date Added: <?php echo format_date($activity_info['date_added'] ?? ''); ?></li>
+  <li>Notes: <?php echo htmlspecialchars($activity_info['notes'] ?? ''); ?></li>
 </ul>
 
 <form method="POST" action="" class="activity-delete-form">

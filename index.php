@@ -43,6 +43,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
   $deviceActivity->device_id = $device->id;
   $deviceActivity->status_id = (int) $_POST['status_id'];
+
+  $deviceActivity->notes = sanitize_input($_POST['notes'] ?? '');
+
   $_SESSION['saved_status_id'] = $_POST['status_id'];
 
   if ($deviceActivity->create()) {
@@ -55,16 +58,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 $saved_status_id = $_SESSION['saved_status_id'] ?? NULL;
 unset($_SESSION['saved_status_id']);
 
-
-// Get all statuses for dropdown.
-$statuses_result = $status->getAll();
-$statuses = [];
-while ($row = $statuses_result->fetch(PDO::FETCH_ASSOC)) {
-  $statuses[] = $row;
-}
-
 // Get all device entries for display.
 $device_activity = $deviceActivity->getAllWithDevicesAndStatus();
+$today_device_activity = $deviceActivity->getTodayDeviceActivity();
 
 // Include the view.
 include 'views/activity_log_form.php';

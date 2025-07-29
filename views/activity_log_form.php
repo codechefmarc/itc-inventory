@@ -12,43 +12,27 @@ include_once 'views/header.php';
 <form method="POST" action="" class="activity-log-form">
   <div class="form-data-entry">
     <div class="form-row">
-      <div class="form-group status-group">
-        <p class="status-label">Status:</p>
-        <?php foreach ($statuses as $status_option) : ?>
-          <?php
-          $checked = NULL;
-          if ($saved_status_id == $status_option['id']) {
-            $checked = 'checked';
-          }
-          ?>
-
-          <div class="status-option">
-            <input
-            type="radio"
-            id="status_id_<?php echo $status_option['id']?>"
-            name="status_id"
-            value="<?php echo $status_option['id']; ?>"
-            required
-            <?php echo $checked; ?>
-            >
-            <label for="status_id_<?php echo $status_option['id']?>"><?php echo htmlspecialchars($status_option['status_name']); ?></label>
-          </div>
-        <?php endforeach; ?>
-      </div>
+      <?php include_once 'views/status_select.php'; ?>
     </div>
 
     <div class="form-row">
       <div class="form-group">
+        <label for="notes">Optional Notes:</label>
+        <input type="text" id="notes" name="notes">
+      </div>
+    </div>
+
+    <div class="form-row tracking-number-row">
+      <div class="form-group">
         <label for="tracking_number">SRJC Tag:</label>
         <input type="text" id="tracking_number" name="tracking_number" autofocus="autofocus">
       </div>
-
       <div class="form-group">
         <label for="serial_number">Serial Number:</label>
         <input type="text" id="serial_number" name="serial_number">
       </div>
-
     </div>
+
   </div>
   <button type="submit" class="button">Log Device Activity</button>
 </form>

@@ -62,9 +62,6 @@ h2 { margin-bottom: 20px; }
   }
 }
 
-// Form Styles
-.form-group { margin-bottom: 20px; }
-
 label, .status-label {
   display: block;
   margin-bottom: 5px;
@@ -72,13 +69,16 @@ label, .status-label {
   color: #555;
 }
 
-input[type="text"], select {
-  width: 100%;
+input[type="text"], select, textarea {
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 5px;
   font-size: 16px;
   box-sizing: border-box;
+}
+
+input[name="notes"] {
+  width: 100%;
 }
 
 select { background-color: white; }
@@ -118,7 +118,7 @@ table {
   font-size: 12px;
 
   th, td {
-    padding: 5px 3px;
+    padding: 7px 3px;
     text-align: left;
     border-bottom: 1px solid #ddd;
   }
@@ -131,6 +131,14 @@ table {
   }
 
   tr:hover { background-color: #f5f5f5; }
+
+  td.notes {
+    width: 30%;
+  }
+
+  td .note-preview {
+    display: none;
+  }
 }
 
 .no-data {
@@ -150,15 +158,17 @@ table {
   text-transform: uppercase;
   letter-spacing: 0.5px;
 
-  &.status-techdesk { background-color: $success; }
+  &.status-library { background-color: $success; }
   &.status-imaging { background-color: $primary; }
   &.status-surplus { background-color: $gray; }
   &.status-repair { background-color: $danger; }
+  &.status-testing { background-color: rebeccapurple; }
 }
 
 // Action icons
 .action-icon {
   color: $primary;
+  font-size: 2rem;
   &:hover {
     color: color.scale($primary, $lightness: -30%);
   }
@@ -196,20 +206,40 @@ table {
   height: 20px;
 }
 
-// Edit Forms
-
-.device-edit-form input {
-  max-width: 200px;
+.form-row {
+  margin-bottom: 1rem;
 }
 
+dialog { display: block; z-index: 1; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); width: 80%; max-width: 500px; }
+
+dialog:not(:target):not([open]) { display: none; }
+
 // Responsive Design (mobile first)
-@media (min-width: 481px) {
+@media (min-width: 641px) {
   body { padding: 20px; }
   .container { padding: 15px; margin: 10px; }
   table { font-size: 14px; }
   th, td { padding: 8px 5px; }
   .status-badge { font-size: 12px; padding: 4px 8px; }
-  .form-data-entry { display: flex; gap: 5rem; align-items: baseline;}
+  .status-group {
+    display: flex;
+    gap: 1rem;
+  }
+
+  table td .note-preview {
+    max-width: 80%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: inline-block;
+  }
+
+  .tracking-number-row {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+  }
+
   .activity-log-form {
     display: flex;
     flex-direction: column;
@@ -219,10 +249,13 @@ table {
     gap: 2rem;
     flex-direction: row;
   }
+
+  .action-icon {
+    font-size: 1rem;
+  }
 }
 
 @media (min-width: 769px) {
-  .form-row { flex-direction: row; gap: 5rem; }
   .container { padding: 30px; }
   table { font-size: 16px; }
   th, td { padding: 10px; }

@@ -26,6 +26,14 @@ $device = new Device($db);
 $deviceActivity = new DeviceActivity($db);
 $messages = MessageManager::getInstance();
 
+
+// Get all statuses for dropdown.
+$statuses_result = $status->getAll();
+$statuses = [];
+while ($row = $statuses_result->fetch(PDO::FETCH_ASSOC)) {
+  $statuses[] = $row;
+}
+
 // Application configuration.
 define('APP_NAME', 'ITC Checkout Laptop Inventory');
 define('APP_VERSION', '1.0');
@@ -47,7 +55,7 @@ function sanitize_input($input) {
  *   Formatted date string.
  */
 function format_date($date) {
-  return date('M j, Y g:i A', strtotime($date));
+  return date('n/j/y g:i A', strtotime($date));
 }
 
 /**

@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Edit device form.
+ * Delete device form.
  */
 
 session_start();

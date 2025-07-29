@@ -77,6 +77,20 @@ class Device {
   }
 
   /**
+   * Get a device by its tracking number.
+   */
+  public function getByEither($value) {
+    $query = "SELECT * FROM " . $this->table_name . "
+      WHERE serial_number = :value
+      OR tracking_number = :value
+      LIMIT 1";
+    $stmt = $this->conn->prepare($query);
+    $stmt->bindParam(':value', $value);
+    $stmt->execute();
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+  }
+
+  /**
    * Get all devices from the database.
    */
   public function getAll() {
