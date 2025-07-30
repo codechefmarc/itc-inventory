@@ -6,8 +6,8 @@
  */
 ?>
 
-<div class="inventory-list">
-  <h2>Today's Device Activity</h2>
+<div class="activity-list">
+  <h2><?php echo $device_activity_title; ?></h2>
     <table>
         <thead>
             <tr>
@@ -22,17 +22,17 @@
             </tr>
         </thead>
         <tbody>
-            <?php if ($today_device_activity->rowCount() > 0) : ?>
-                <?php while ($row = $today_device_activity->fetch(PDO::FETCH_ASSOC)) : ?>
+            <?php if ($device_activity->rowCount() > 0) : ?>
+                <?php while ($row = $device_activity->fetch(PDO::FETCH_ASSOC)) : ?>
                   <?php
                   $model_number = !empty($row['model_number']) ? htmlspecialchars($row['model_number']) : '';
                   $notes = !empty($row['notes']) ? htmlspecialchars($row['notes']) : '';
-                  $device_number = $row['tracking_number'] ? 'SRJC: ' . $row['tracking_number'] : 'serial: ' . $row['serial_number'];
+                  $device_number = $device->jcOrSerial($row['tracking_number'], $row['serial_number']);
                   ?>
                   <tr>
 
-                        <td><?php echo htmlspecialchars($row['tracking_number']); ?></td>
-                        <td><?php echo htmlspecialchars($row['serial_number']); ?></td>
+                        <td><a href="search.php?q=<?php echo htmlspecialchars($row['tracking_number']); ?>"><?php echo htmlspecialchars($row['tracking_number']); ?></a></td>
+                        <td><a href="search.php?q=<?php echo htmlspecialchars($row['serial_number']); ?>"><?php echo htmlspecialchars($row['serial_number']); ?></a></td>
                         <td><?php echo $model_number; ?></td>
                         <td class="notes">
                           <?php

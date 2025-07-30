@@ -58,9 +58,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 $saved_status_id = $_SESSION['saved_status_id'] ?? NULL;
 unset($_SESSION['saved_status_id']);
 
-// Get all device entries for display.
-$device_activity = $deviceActivity->getAllWithDevicesAndStatus();
-$today_device_activity = $deviceActivity->getTodayDeviceActivity();
-
 // Include the view.
 include 'views/activity_log_form.php';

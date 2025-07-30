@@ -38,6 +38,7 @@ include_once 'views/header.php';
 </form>
 
 <?php
-
+$device_activity = $deviceActivity->getTodayDeviceActivity();
+$device_activity_title = "Today's Device Activity";
 include_once 'views/activity_list.php';
 include_once 'views/footer.php';

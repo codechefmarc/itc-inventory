@@ -101,6 +101,17 @@ class Device {
   }
 
   /**
+   * Get all devices with their statuses.
+   */
+  public function getAllByStatus($status_id) {
+    $query = "SELECT * FROM " . $this->table_name . " WHERE status_id = :status_id ORDER BY model_number ASC";
+    $stmt = $this->conn->prepare($query);
+    $stmt->bindParam(':status_id', $status_id);
+    $stmt->execute();
+    return $stmt;
+  }
+
+  /**
    * Check if a tracking number already exists in the database.
    */
   public function trackingNumberExists($tracking_number) {
@@ -158,6 +169,17 @@ class Device {
     $stmt = $this->conn->prepare($query);
     $stmt->bindParam(':id', $this->id);
     return $stmt->execute();
+  }
+
+  /**
+   * Get the device's SRJC tag or serial number.
+   *
+   * @param string $tracking_number
+   * @param string $serial_number
+   * @return string
+   */
+  public function jcOrSerial($tracking_number, $serial_number) {
+    return !empty($tracking_number) ? 'SRJC ' . htmlspecialchars($tracking_number) : 'Serial ' . htmlspecialchars($serial_number);
   }
 
 }

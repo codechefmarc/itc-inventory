@@ -10,59 +10,44 @@ session_start();
 //phpcs:disable DrupalPractice
 
 require_once 'config.php';
-include_once 'views/header.php';
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
-  if (empty($_GET['q'])) {
+  if (isset($_GET['q']) && empty($_GET['q'])) {
     $messages->addError("Please provide an SRJC tag or serial number.");
-    header('Location: /search.php');
-    exit;
-
   }
 
   $device_info = $device->getByEither($_GET['q'] ?? 0);
-  print_r($device_info);
+  if (!$device_info && isset($_GET['q'])) {
+    $messages->addError("Device not found for " . htmlspecialchars($_GET['q']));
+  }
+
+  if ($device_info) {
+    $device_activity = !empty($device_info) ? $deviceActivity->getByDeviceId($device_info['id']) : [];
+  }
 
 }
-// $activity_info = $deviceActivity->getById($_GET['id'] ?? 0);
-// $saved_status_id = $activity_info['status_id'] ?? NULL;
 
-// if (!$activity_info) {
-//   $messages->addError("Activity not found.");
-//   header('Location: /');
-//   exit;
-// }
-
-// if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
-//   if (empty($_GET['id'])) {
-//     $messages->addError("Activity not found.");
-//     header('Location: /');
-//     exit;
-//   }
-//   $deviceActivity->id = $_GET['id'];
-//   $deviceActivity->notes = sanitize_input($_POST['notes']);
-//   $deviceActivity->status_id = sanitize_input($_POST['status_id']);
-//   $deviceActivity->update();
-//   $messages->addSuccess("Activity updated successfully.");
-//   header('Location: /');
-//   exit;
-// }
+include_once 'views/header.php';
 
 ?>
 <h2>Search</h2>
 
-<form method="POST" action="" class="search-form">
+<form method="GET" action="" class="search-form">
 
 <h3>Find Device</h3>
   <div class="form-row">
       <div class="form-group">
         <label for="track_or_serial">SRJC tag or serial number</label>
-        <input type="text" id="track_or_serial" name="q" autofocus="autofocus">
+        <input type="text" id="track_or_serial" name="q" autofocus="autofocus" value="<?php echo htmlspecialchars($_GET['q'] ?? ''); ?>">
       </div>
     </div>
     <button type="submit" class="button">Search</button>
+    <a href="/search.php" class="button">Clear</a>
 </form>
 
-<?php include_once 'views/footer.php';
+<?php if (!empty($device_info)) {
+  $device_activity_title = "Device Activity for " . $device->jcOrSerial($device_info['tracking_number'], $device_info['serial_number']);
+  include_once 'views/activity_list.php';
+}
+include_once 'views/footer.php';

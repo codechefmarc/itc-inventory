@@ -121,10 +121,18 @@ class DeviceActivity {
    */
   public function getByDeviceId($device_id) {
     $query = "SELECT
-                de.*,
+                de.id as entry_id,
+                de.date_added,
+                de.notes,
+                d.id as device_id,
+                d.serial_number,
+                d.tracking_number,
+                d.model_number,
+                s.id as status_id,
                 s.status_name,
                 s.description as status_description
               FROM " . $this->table_name . " de
+              JOIN devices d ON de.device_id = d.id
               JOIN statuses s ON de.status_id = s.id
               WHERE de.device_id = :device_id
               ORDER BY de.date_added DESC";
