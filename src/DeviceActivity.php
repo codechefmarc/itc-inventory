@@ -12,6 +12,7 @@ class DeviceActivity {
   public $status_id;
   public $date_added;
   public $notes;
+  public $user;
 
   public function __construct($db) {
     $this->conn = $db;
@@ -22,8 +23,8 @@ class DeviceActivity {
    */
   public function create() {
     $query = "INSERT INTO " . $this->table_name . "
-              (device_id, status_id, date_added, notes)
-              VALUES (:device_id, :status_id, :date_added, :notes)";
+              (device_id, status_id, date_added, notes, user)
+              VALUES (:device_id, :status_id, :date_added, :notes, :user)";
 
     $stmt = $this->conn->prepare($query);
 
@@ -34,12 +35,46 @@ class DeviceActivity {
     $stmt->bindParam(':status_id', $this->status_id);
     $stmt->bindParam(':date_added', $this->date_added);
     $stmt->bindParam(':notes', $this->notes);
+    $stmt->bindParam(':user', $this->user);
 
     if ($stmt->execute()) {
       $this->id = $this->conn->lastInsertId();
       return TRUE;
     }
     return FALSE;
+  }
+
+  /**
+   * Update device information.
+   */
+  public function update() {
+    $query = "UPDATE " . $this->table_name . "
+              SET status_id = :status_id,
+                  notes = :notes
+              WHERE id = :id";
+
+    $stmt = $this->conn->prepare($query);
+
+    // Sanitize inputs.
+    $this->status_id = htmlspecialchars(strip_tags($this->status_id));
+    $this->notes = htmlspecialchars(strip_tags($this->notes));
+
+    // Bind parameters.
+    $stmt->bindParam(':status_id', $this->status_id);
+    $stmt->bindParam(':notes', $this->notes);
+    $stmt->bindParam(':id', $this->id);
+
+    return $stmt->execute();
+  }
+
+  /**
+   * Delete a device activity entry by its ID.
+   */
+  public function delete() {
+    $query = "DELETE FROM " . $this->table_name . " WHERE id = :id";
+    $stmt = $this->conn->prepare($query);
+    $stmt->bindParam(':id', $this->id);
+    return $stmt->execute();
   }
 
   /**
@@ -50,6 +85,7 @@ class DeviceActivity {
                 de.id as entry_id,
                 de.date_added,
                 de.notes,
+                de.user,
                 d.id as device_id,
                 d.serial_number,
                 d.tracking_number,
@@ -68,13 +104,14 @@ class DeviceActivity {
   }
 
   /**
-   * Get all device activity entries with associated devices and statuses.
+   * Get device activity for today.
    */
   public function getTodayDeviceActivity() {
     $query = "SELECT
                 de.id as entry_id,
                 de.date_added,
                 de.notes,
+                de.user,
                 d.id as device_id,
                 d.serial_number,
                 d.tracking_number,
@@ -94,7 +131,7 @@ class DeviceActivity {
   }
 
   /**
-   * Get a device activity entry by its ID with associated device and status.
+   * Get a device activity entry by its ID.
    */
   public function getById($id) {
     $query = "SELECT
@@ -124,6 +161,7 @@ class DeviceActivity {
                 de.id as entry_id,
                 de.date_added,
                 de.notes,
+                de.user,
                 d.id as device_id,
                 d.serial_number,
                 d.tracking_number,
@@ -199,6 +237,7 @@ class DeviceActivity {
             de.device_id,
             de.date_added,
             de.notes,
+            de.user,
             d.serial_number,
             d.tracking_number,
             d.model_number,
@@ -223,36 +262,31 @@ class DeviceActivity {
   }
 
   /**
-   * Update device information.
+   * Get device activity entries by date.
    */
-  public function update() {
-    $query = "UPDATE " . $this->table_name . "
-              SET status_id = :status_id,
-                  notes = :notes
-              WHERE id = :id";
+  public function getByDate($date) {
+    $query = "SELECT
+                de.id as entry_id,
+                de.date_added,
+                de.notes,
+                de.user,
+                d.id as device_id,
+                d.serial_number,
+                d.tracking_number,
+                d.model_number,
+                s.id as status_id,
+                s.status_name,
+                s.description as status_description
+              FROM " . $this->table_name . " de
+              JOIN devices d ON de.device_id = d.id
+              JOIN statuses s ON de.status_id = s.id
+              WHERE DATE(de.date_added) = :date
+              ORDER BY de.date_added DESC";
 
     $stmt = $this->conn->prepare($query);
-
-    // Sanitize inputs.
-    $this->status_id = htmlspecialchars(strip_tags($this->status_id));
-    $this->notes = htmlspecialchars(strip_tags($this->notes));
-
-    // Bind parameters.
-    $stmt->bindParam(':status_id', $this->status_id);
-    $stmt->bindParam(':notes', $this->notes);
-    $stmt->bindParam(':id', $this->id);
-
-    return $stmt->execute();
-  }
-
-  /**
-   * Delete a device activity entry by its ID.
-   */
-  public function delete() {
-    $query = "DELETE FROM " . $this->table_name . " WHERE id = :id";
-    $stmt = $this->conn->prepare($query);
-    $stmt->bindParam(':id', $this->id);
-    return $stmt->execute();
+    $stmt->bindParam(':date', $date);
+    $stmt->execute();
+    return $stmt;
   }
 
 }

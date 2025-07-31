@@ -4,6 +4,9 @@
  * @file
  * Device activity list.
  */
+
+$device_activity = $deviceActivity->getTodayDeviceActivity();
+$device_activity_title = "Today's Device Activity";
 ?>
 
 <div class="activity-list">
@@ -14,6 +17,7 @@
                 <th>SRJC Tag</th>
                 <th>Serial Number</th>
                 <th>Model Number</th>
+                <th>User</th>
                 <th>Notes</th>
                 <th>Status</th>
                 <th>Date Logged</th>
@@ -34,6 +38,12 @@
                         <td><a href="search.php?q=<?php echo htmlspecialchars($row['tracking_number']); ?>"><?php echo htmlspecialchars($row['tracking_number']); ?></a></td>
                         <td><a href="search.php?q=<?php echo htmlspecialchars($row['serial_number']); ?>"><?php echo htmlspecialchars($row['serial_number']); ?></a></td>
                         <td><?php echo $model_number; ?></td>
+                        <td>
+                        <?php if ($row['user']) : ?>
+                          <span class="short-user" style="background-color: <?php echo dark_color_from_letters($user->shortUser($row['user'])); ?>;" title="<?php echo $row['user']; ?>"><?php echo $user->shortUser($row['user']); ?>
+                          </span>
+                        <?php endif; ?>
+                      </td>
                         <td class="notes">
                           <?php
                           if ($notes) : ?>
@@ -48,7 +58,7 @@
                           <?php endif; ?>
                         </td>
                         <td>
-                            <span class="status-badge <?php echo get_status_badge_class($row['status_name']); ?>"
+                            <span class="status-badge <?php echo $status->getStatusBadgeClass($row['status_name']); ?>"
                                   title="<?php echo htmlspecialchars($row['status_description']); ?>">
                                 <?php echo htmlspecialchars($row['status_name']); ?>
                             </span>

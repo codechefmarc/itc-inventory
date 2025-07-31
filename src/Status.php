@@ -75,4 +75,18 @@ class Status {
     return $stmt->rowCount() > 0;
   }
 
+  /**
+   * Get status badge class based on status name.
+   *
+   * @param string $status_name
+   *   The name of the status.
+   *
+   * @return string
+   *   The CSS class for the status badge.
+   */
+  public function getStatusBadgeClass($status_name) {
+    $status_lower = strtolower(str_replace(' ', '', $status_name));
+    return 'status-' . $status_lower;
+  }
+
 }

@@ -14,6 +14,7 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 // Include all class files.
 require_once 'src/Database.php';
+require_once 'src/User.php';
 require_once 'src/Status.php';
 require_once 'src/Device.php';
 require_once 'src/DeviceActivity.php';
@@ -24,18 +25,11 @@ $database = new Database();
 $db = $database->connect();
 
 // Initialize class instances.
+$user = new User();
 $status = new Status($db);
 $device = new Device($db);
 $deviceActivity = new DeviceActivity($db);
 $messages = MessageManager::getInstance();
-
-
-// Get all statuses for dropdown.
-$statuses_result = $status->getAll();
-$statuses = [];
-while ($row = $statuses_result->fetch(PDO::FETCH_ASSOC)) {
-  $statuses[] = $row;
-}
 
 // Application configuration.
 define('APP_NAME', 'ITC Checkout Laptop Inventory');
@@ -62,15 +56,31 @@ function format_date($date) {
 }
 
 /**
- * Get status badge class based on status name.
+ * Format date for display without time.
  *
- * @param string $status_name
- *   The name of the status.
+ * @param string $date
+ *   The date string to format.
  *
  * @return string
- *   The CSS class for the status badge.
+ *   Formatted date string.
  */
-function get_status_badge_class($status_name) {
-  $status_lower = strtolower(str_replace(' ', '', $status_name));
-  return 'status-' . $status_lower;
+function format_date_only($date) {
+  return date('n/j/y', strtotime($date));
+}
+
+/**
+ * Generate a dark color based on the first two letters of a string.
+ *
+ * @param string $letters
+ *   The letters to base the color on.
+ *
+ * @return string
+ *   The generated HSL color.
+ */
+function dark_color_from_letters($letters) {
+  $hash = crc32(strtoupper($letters));
+  $hue = $hash % 360;
+  $saturation = 70 + ($hash % 20);
+  $lightness = 20 + ($hash % 10);
+  return "hsl($hue, $saturation%, $lightness%)";
 }

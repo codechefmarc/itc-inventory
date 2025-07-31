@@ -4,6 +4,14 @@
  * @file
  * Status selection view for device activity logging.
  */
+
+// Get all statuses for dropdown.
+$statuses_result = $status->getAll();
+$statuses = [];
+while ($row = $statuses_result->fetch(PDO::FETCH_ASSOC)) {
+  $statuses[] = $row;
+}
+
 ?>
 
 <p class="status-label">Status:</p>
@@ -13,6 +21,7 @@
 
   <?php
   $checked = NULL;
+  $saved_status_id = $_SESSION['saved_status_id'] ?? '';
   if ($saved_status_id == $status_option['id']) {
     $checked = 'checked';
   }

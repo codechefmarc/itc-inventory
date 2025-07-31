@@ -1,4 +1,5 @@
 @use 'sass:color';
+@use 'messages';
 
 $primary: #007bff;
 $success: #28a745;
@@ -35,6 +36,14 @@ h1, h2 {
 
 h1 { margin-bottom: 30px; }
 h2 { margin-bottom: 20px; }
+
+.branding {
+  display: flex;
+  justify-content: center;
+  .logo {
+    width: 250px;
+  }
+}
 
 // Nav
 .main-nav {
@@ -77,15 +86,15 @@ label, .status-label {
   }
 }
 
-input[type="text"], select, textarea {
-  padding: 10px;
+input[type="text"], select, textarea, input[type="date"], input[type="number"] {
+  padding: 0.5rem;
   border: 1px solid #ddd;
   border-radius: 5px;
-  font-size: 16px;
+  font-size: 1rem;
   box-sizing: border-box;
 }
 
-input[name="notes"] {
+input[name="notes"], input[name="user"] {
   width: 100%;
 }
 
@@ -229,6 +238,16 @@ table {
 
 }
 
+.short-user {
+  display: flex;
+  justify-content: center;
+  padding: 0.5rem;
+  border-radius: 50%;
+  width: 1rem;
+  height: 1rem;
+  color: white;
+}
+
 dialog { display: block; z-index: 1; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); width: 80%; max-width: 500px; }
 
 dialog:not(:target):not([open]) { display: none; }
@@ -265,7 +284,7 @@ dialog:not(:target):not([open]) { display: none; }
     align-items: center;
   }
 
-  .report-container {
+  .search-container, .report-container {
     display: flex;
     justify-content: space-around;
   }

@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
 }
 
-include_once 'views/header.php';
+include_once 'partials/header.php';
 
 ?>
 <h2>Reports</h2>
@@ -45,13 +45,13 @@ include_once 'views/header.php';
     <ul>
       <li>Total Devices: <?php echo $device->getAll()->rowCount(); ?></li>
     </ul>
-    <h3>Devices by Status</h3>
+    <h3>Current Devices by Status</h3>
     <small>Click on a status to view current devices.</small>
     <ul>
     <?php foreach ($status_counts as $row) : ?>
         <li>
 
-      <a class="status-badge <?php echo get_status_badge_class($row['status_name']); ?>" href="?report=current_by_status&status_id=<?php echo htmlspecialchars($row['status_id']); ?>">
+      <a class="status-badge <?php echo $status->getStatusBadgeClass($row['status_name']); ?>" href="?report=current_by_status&status_id=<?php echo htmlspecialchars($row['status_id']); ?>">
       <?php echo htmlspecialchars($row['status_name']) . " (" . $row['device_count'] . ")"; ?>
 </a>
       </li>
@@ -69,19 +69,19 @@ switch ($report_type) {
   case 'all_activity':
     $device_activity = $deviceActivity->getAllWithDevicesAndStatus();
     $device_activity_title = "All Device Activity";
-    include_once 'views/activity_list.php';
+    include_once 'partials/activity_log.php';
     break;
 
   case 'all_devices':
     $devices = $device->getAll();
     $devices_title = "All Devices";
-    include_once 'views/device_list.php';
+    include_once 'partials/device_list.php';
     break;
 
   case 'inactive':
     $devices = $device->findInactiveDevices();
     $devices_title = "Inactive Devices";
-    include_once 'views/device_list.php';
+    include_once 'partials/device_list.php';
     break;
 
   case 'current_by_status':
@@ -89,10 +89,10 @@ switch ($report_type) {
       $status_id = (int) $_GET['status_id'];
       $device_activity = $deviceActivity->getLatestByStatusId($status_id);
       $device_activity_title = "Devices with current status: " . htmlspecialchars($status->getById($status_id)['status_name']);
-      include_once 'views/activity_list.php';
+      include_once 'partials/activity_log.php';
     }
   default:
     break;
 }
 
-include_once 'views/footer.php';
+include_once 'partials/footer.php';

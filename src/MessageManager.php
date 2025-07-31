@@ -138,16 +138,12 @@ class MessageManager {
   /**
    * Display all messages.
    */
-  public function display($includeCSS = TRUE) {
+  public function display() {
     if (empty($this->messages)) {
       return '';
     }
 
     $html = '';
-
-    if ($includeCSS) {
-      $html .= $this->getCss();
-    }
 
     $html .= '<div class="message-container">';
 
@@ -166,7 +162,7 @@ class MessageManager {
   /**
    * Display messages of a specific type.
    */
-  public function displayType($type, $includeCSS = TRUE) {
+  public function displayType($type) {
     $messages = $this->getByType($type);
 
     if (empty($messages)) {
@@ -174,10 +170,6 @@ class MessageManager {
     }
 
     $html = '';
-
-    if ($includeCSS) {
-      $html .= $this->getCss();
-    }
 
     $html .= '<div class="message-container">';
 
@@ -214,83 +206,6 @@ class MessageManager {
         $icon,
         htmlspecialchars($message['text'])
     );
-  }
-
-  /**
-   * Get CSS styles for messages.
-   */
-  private function getCss() {
-    return '
-    <style>
-    .message-container {
-        margin: 15px 0;
-    }
-
-    .message {
-        padding: 12px 15px;
-        border-radius: 4px;
-        margin-bottom: 10px;
-        border-left: 4px solid;
-        position: relative;
-        display: flex;
-        align-items: center;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
-
-    .message-icon {
-        font-weight: bold;
-        margin-right: 10px;
-        font-size: 16px;
-    }
-
-    .message-text {
-        flex: 1;
-    }
-
-    .message-close {
-        background: none;
-        border: none;
-        font-size: 18px;
-        cursor: pointer;
-        color: inherit;
-        opacity: 0.7;
-        margin-left: 10px;
-        padding: 0;
-        width: 20px;
-        height: 20px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .message-close:hover {
-        opacity: 1;
-    }
-
-    .message-success {
-        background-color: #d4edda;
-        color: #155724;
-        border-left-color: #28a745;
-    }
-
-    .message-error {
-        background-color: #f8d7da;
-        color: #721c24;
-        border-left-color: #dc3545;
-    }
-
-    .message-warning {
-        background-color: #fff3cd;
-        color: #856404;
-        border-left-color: #ffc107;
-    }
-
-    .message-info {
-        background-color: #d1ecf1;
-        color: #0c5460;
-        border-left-color: #17a2b8;
-    }
-    </style>';
   }
 
   /**

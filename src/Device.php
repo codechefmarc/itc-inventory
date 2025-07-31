@@ -29,7 +29,6 @@ class Device {
     // Sanitize inputs.
     $this->serial_number = htmlspecialchars(strip_tags($this->serial_number));
     $this->tracking_number = htmlspecialchars(strip_tags($this->tracking_number));
-    //$this->model_number = htmlspecialchars(strip_tags($this->model_number));
 
     // Bind parameters.
     $stmt->bindParam(':serial_number', $this->serial_number);
@@ -41,6 +40,42 @@ class Device {
       return TRUE;
     }
     return FALSE;
+  }
+
+  /**
+   * Update device information.
+   */
+  public function update() {
+    $query = "UPDATE " . $this->table_name . "
+              SET serial_number = :serial_number,
+                  tracking_number = :tracking_number,
+                  model_number = :model_number
+              WHERE id = :id";
+
+    $stmt = $this->conn->prepare($query);
+
+    // Sanitize inputs.
+    $this->serial_number = htmlspecialchars(strip_tags($this->serial_number));
+    $this->tracking_number = htmlspecialchars(strip_tags($this->tracking_number));
+    $this->model_number = htmlspecialchars(strip_tags($this->model_number));
+
+    // Bind parameters.
+    $stmt->bindParam(':serial_number', $this->serial_number);
+    $stmt->bindParam(':tracking_number', $this->tracking_number);
+    $stmt->bindParam(':model_number', $this->model_number);
+    $stmt->bindParam(':id', $this->id);
+
+    return $stmt->execute();
+  }
+
+  /**
+   * Delete device by ID.
+   */
+  public function delete() {
+    $query = "DELETE FROM " . $this->table_name . " WHERE id = :id";
+    $stmt = $this->conn->prepare($query);
+    $stmt->bindParam(':id', $this->id);
+    return $stmt->execute();
   }
 
   /**
@@ -66,7 +101,7 @@ class Device {
   }
 
   /**
-   * Get a device by its tracking number.
+   * Get a device by its serial number.
    */
   public function getBySerialNumber($serial_number) {
     $query = "SELECT * FROM " . $this->table_name . " WHERE serial_number = :serial_number LIMIT 1";
@@ -77,7 +112,7 @@ class Device {
   }
 
   /**
-   * Get a device by its tracking number.
+   * Get a device by either SRJC or serial numbers.
    */
   public function getByEither($value) {
     $query = "SELECT * FROM " . $this->table_name . "
@@ -150,47 +185,7 @@ class Device {
   }
 
   /**
-   * Update device information.
-   */
-  public function update() {
-    $query = "UPDATE " . $this->table_name . "
-              SET serial_number = :serial_number,
-                  tracking_number = :tracking_number,
-                  model_number = :model_number
-              WHERE id = :id";
-
-    $stmt = $this->conn->prepare($query);
-
-    // Sanitize inputs.
-    $this->serial_number = htmlspecialchars(strip_tags($this->serial_number));
-    $this->tracking_number = htmlspecialchars(strip_tags($this->tracking_number));
-    $this->model_number = htmlspecialchars(strip_tags($this->model_number));
-
-    // Bind parameters.
-    $stmt->bindParam(':serial_number', $this->serial_number);
-    $stmt->bindParam(':tracking_number', $this->tracking_number);
-    $stmt->bindParam(':model_number', $this->model_number);
-    $stmt->bindParam(':id', $this->id);
-
-    return $stmt->execute();
-  }
-
-  /**
-   * Delete device by ID.
-   */
-  public function delete() {
-    $query = "DELETE FROM " . $this->table_name . " WHERE id = :id";
-    $stmt = $this->conn->prepare($query);
-    $stmt->bindParam(':id', $this->id);
-    return $stmt->execute();
-  }
-
-  /**
-   * Get the device's SRJC tag or serial number.
-   *
-   * @param string $tracking_number
-   * @param string $serial_number
-   * @return string
+   * String representation of the device's SRJC tag or serial number.
    */
   public function jcOrSerial($tracking_number, $serial_number) {
     return !empty($tracking_number) ? 'SRJC ' . htmlspecialchars($tracking_number) : 'Serial ' . htmlspecialchars($serial_number);

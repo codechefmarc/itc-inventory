@@ -10,7 +10,7 @@ session_start();
 //phpcs:disable DrupalPractice
 
 require_once 'config.php';
-include_once 'views/header.php';
+include_once 'partials/header.php';
 
 $device_info = $device->getById($_GET['id'] ?? 0);
 
@@ -63,4 +63,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <a href="/" class="button">Cancel</a>
 </form>
 
-<?php include_once 'views/footer.php';
+<?php include_once 'partials/footer.php';

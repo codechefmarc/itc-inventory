@@ -10,6 +10,9 @@ class Database {
   private $password = 'db';
   private $conn;
 
+  /**
+   * Connect to the database.
+   */
   public function connect() {
     $this->conn = NULL;
     try {
