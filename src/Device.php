@@ -94,7 +94,21 @@ class Device {
    * Get all devices from the database.
    */
   public function getAll() {
-    $query = "SELECT * FROM " . $this->table_name . " ORDER BY model_number ASC";
+    $query = "SELECT *, id as device_id FROM " . $this->table_name . " ORDER BY model_number ASC";
+    $stmt = $this->conn->prepare($query);
+    $stmt->execute();
+    return $stmt;
+  }
+
+  /**
+   * Find inactive devices that have no activity entries.
+   */
+  public function findInactiveDevices() {
+    $query = "SELECT d.*, d.id as device_id
+              FROM devices d
+              LEFT JOIN device_entries de ON d.id = de.device_id
+              WHERE de.id IS NULL";
+
     $stmt = $this->conn->prepare($query);
     $stmt->execute();
     return $stmt;

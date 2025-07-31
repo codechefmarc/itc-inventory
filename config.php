@@ -9,6 +9,9 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
+// Autoload classes using Composer.
+require_once __DIR__ . '/vendor/autoload.php';
+
 // Include all class files.
 require_once 'src/Database.php';
 require_once 'src/Status.php';

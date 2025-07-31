@@ -16,7 +16,7 @@
                 <th>Model Number</th>
                 <th>Notes</th>
                 <th>Status</th>
-                <th>Date Added</th>
+                <th>Date Logged</th>
                 <th>Device</th>
                 <th>Activity</th>
             </tr>
@@ -66,7 +66,7 @@
                 <?php endwhile; ?>
             <?php else : ?>
                 <tr>
-                    <td colspan="7" class="no-data">No devices in inventory</td>
+                    <td colspan="8" class="no-data">No activities found</td>
                 </tr>
             <?php endif; ?>
         </tbody>

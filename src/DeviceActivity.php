@@ -144,6 +144,32 @@ class DeviceActivity {
   }
 
   /**
+   * Get count of devices by their latest status.
+   */
+  public function countDevicesByLatestStatus() {
+    $query = "
+        SELECT
+        s.id AS status_id,
+        s.status_name,
+            s.description,
+            COUNT(*) AS device_count
+        FROM device_entries de
+        INNER JOIN (
+            SELECT device_id, MAX(date_added) AS latest_date
+            FROM device_entries
+            GROUP BY device_id
+        ) latest ON de.device_id = latest.device_id AND de.date_added = latest.latest_date
+        INNER JOIN statuses s ON de.status_id = s.id
+        GROUP BY s.status_name
+        ORDER BY device_count DESC
+    ";
+
+    $stmt = $this->conn->prepare($query);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+  }
+
+  /**
    * Get all device activity entries for a specific status.
    */
   public function getByStatusId($status_id) {
@@ -159,6 +185,39 @@ class DeviceActivity {
 
     $stmt = $this->conn->prepare($query);
     $stmt->bindParam(':status_id', $status_id);
+    $stmt->execute();
+    return $stmt;
+  }
+
+  /**
+   * Get the latest device activity entries for a specific status.
+   */
+  public function getLatestByStatusId($status_id) {
+    $query = "
+        SELECT
+            de.id AS entry_id,
+            de.device_id,
+            de.date_added,
+            de.notes,
+            d.serial_number,
+            d.tracking_number,
+            d.model_number,
+            s.status_name,
+            s.description AS status_description
+        FROM device_entries de
+        INNER JOIN (
+            SELECT device_id, MAX(date_added) AS latest_date
+            FROM device_entries
+            GROUP BY device_id
+        ) latest ON de.device_id = latest.device_id AND de.date_added = latest.latest_date
+        INNER JOIN devices d ON de.device_id = d.id
+        INNER JOIN statuses s ON de.status_id = s.id
+        WHERE de.status_id = :status_id
+        ORDER BY de.date_added DESC
+    ";
+
+    $stmt = $this->conn->prepare($query);
+    $stmt->bindParam(':status_id', $status_id, PDO::PARAM_INT);
     $stmt->execute();
     return $stmt;
   }

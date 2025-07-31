@@ -35,7 +35,6 @@ include_once 'views/header.php';
 
 <form method="GET" action="" class="search-form">
 
-<h3>Find Device</h3>
   <div class="form-row">
       <div class="form-group">
         <label for="track_or_serial">SRJC tag or serial number</label>
@@ -47,7 +46,7 @@ include_once 'views/header.php';
 </form>
 
 <?php if (!empty($device_info)) {
-  $device_activity_title = "Device Activity for " . $device->jcOrSerial($device_info['tracking_number'], $device_info['serial_number']);
+  $device_activity_title = "All device activity for " . $device->jcOrSerial($device_info['tracking_number'], $device_info['serial_number']);
   include_once 'views/activity_list.php';
 }
 include_once 'views/footer.php';

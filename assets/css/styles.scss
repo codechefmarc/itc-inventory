@@ -69,6 +69,14 @@ label, .status-label {
   color: #555;
 }
 
+.report-quick-facts a.status-badge {
+  color: white;
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
 input[type="text"], select, textarea {
   padding: 10px;
   border: 1px solid #ddd;
@@ -210,6 +218,17 @@ table {
   margin-bottom: 1rem;
 }
 
+.report-container {
+  ul {
+    list-style-type: none;
+    padding-inline-start: 0;
+  }
+  li {
+    margin: 0.5rem 0;
+  }
+
+}
+
 dialog { display: block; z-index: 1; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); width: 80%; max-width: 500px; }
 
 dialog:not(:target):not([open]) { display: none; }
@@ -245,6 +264,12 @@ dialog:not(:target):not([open]) { display: none; }
     flex-direction: column;
     align-items: center;
   }
+
+  .report-container {
+    display: flex;
+    justify-content: space-around;
+  }
+
   .main-nav ul {
     gap: 2rem;
     flex-direction: row;

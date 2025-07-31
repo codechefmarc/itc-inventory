@@ -57,6 +57,14 @@ label, .status-label {
   color: #555;
 }
 
+.report-quick-facts a.status-badge {
+  color: white;
+  text-decoration: none;
+}
+.report-quick-facts a.status-badge:hover {
+  text-decoration: underline;
+}
+
 input[type=text], select, textarea {
   padding: 10px;
   border: 1px solid #ddd;
@@ -96,7 +104,7 @@ select {
   background-color: rgb(186.146835443, 32.253164557, 46.9974683544);
 }
 
-.inventory-list {
+.activity-list {
   margin-top: 30px;
 }
 
@@ -218,6 +226,14 @@ table td .note-preview {
   margin-bottom: 1rem;
 }
 
+.report-container ul {
+  list-style-type: none;
+  padding-inline-start: 0;
+}
+.report-container li {
+  margin: 0.5rem 0;
+}
+
 dialog {
   display: block;
   z-index: 1;
@@ -275,6 +291,10 @@ dialog:not(:target):not([open]) {
     display: flex;
     flex-direction: column;
     align-items: center;
+  }
+  .report-container {
+    display: flex;
+    justify-content: space-around;
   }
   .main-nav ul {
     gap: 2rem;

@@ -1,0 +1,13 @@
+{
+    "name": "mberger/itc-inventory",
+    "require-dev": {
+        "kint-php/kint": "^6.0"
+    },
+    "authors": [
+        {
+            "name": "Marc Berger",
+            "email": "codechefmarc@gmail.com"
+        }
+    ],
+    "require": {}
+}
