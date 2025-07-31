@@ -5,7 +5,7 @@
  */
 class DeviceActivity {
   private $conn;
-  private $table_name = "device_entries";
+  private $table_name = "device_activity";
 
   public $id;
   public $device_id;
@@ -191,10 +191,10 @@ class DeviceActivity {
         s.status_name,
             s.description,
             COUNT(*) AS device_count
-        FROM device_entries de
+        FROM device_activity de
         INNER JOIN (
             SELECT device_id, MAX(date_added) AS latest_date
-            FROM device_entries
+            FROM device_activity
             GROUP BY device_id
         ) latest ON de.device_id = latest.device_id AND de.date_added = latest.latest_date
         INNER JOIN statuses s ON de.status_id = s.id
@@ -243,10 +243,10 @@ class DeviceActivity {
             d.model_number,
             s.status_name,
             s.description AS status_description
-        FROM device_entries de
+        FROM device_activity de
         INNER JOIN (
             SELECT device_id, MAX(date_added) AS latest_date
-            FROM device_entries
+            FROM device_activity
             GROUP BY device_id
         ) latest ON de.device_id = latest.device_id AND de.date_added = latest.latest_date
         INNER JOIN devices d ON de.device_id = d.id

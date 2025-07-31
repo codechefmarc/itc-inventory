@@ -141,7 +141,7 @@ class Device {
   public function findInactiveDevices() {
     $query = "SELECT d.*, d.id as device_id
               FROM devices d
-              LEFT JOIN device_entries de ON d.id = de.device_id
+              LEFT JOIN device_activity de ON d.id = de.device_id
               WHERE de.id IS NULL";
 
     $stmt = $this->conn->prepare($query);
