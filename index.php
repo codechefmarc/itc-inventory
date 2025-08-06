@@ -57,6 +57,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   exit;
 }
 
+$device_activity = $deviceActivity->getTodayDeviceActivity();
+$device_activity_title = "Today's Device Activity";
+
 include 'partials/activity_log_form.php';
 include 'partials/activity_log.php';
 include 'partials/footer.php';

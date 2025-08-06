@@ -4,9 +4,6 @@
  * @file
  * Device activity list.
  */
-
-$device_activity = $deviceActivity->getTodayDeviceActivity();
-$device_activity_title = "Today's Device Activity";
 ?>
 
 <div class="activity-list">
